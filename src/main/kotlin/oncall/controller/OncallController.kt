@@ -3,14 +3,18 @@ package oncall.controller
 import oncall.utils.Validator
 import oncall.view.InputView
 
-class OncallController(private val inputView: InputView,
-                       private val validator: Validator) {
+class OncallController(
+    private val inputView: InputView,
+    private val validator: Validator,
+    private val saveToModel: SaveToModel
+) {
 
     fun run(){
         try {
             val monthAndDate = inputView.inputMonthAndDate()
             checkComma(monthAndDate)
             checkMonthAndDate(monthAndDate)
+            val saveMonthAndDate = saveToModel.saveMonthAndDate(monthAndDate)
             return step2()
         } catch (e: IllegalArgumentException){
             println(e)
@@ -22,6 +26,7 @@ class OncallController(private val inputView: InputView,
             val weekDayWorker = inputView.inputWeekDayWorker()
             checkComma(weekDayWorker)
             checkWeekDayWorker(weekDayWorker)
+            val saveWeekDayWorker = saveToModel.saveWeekDayWorker(weekDayWorker)
             return step3(weekDayWorker.trim().split(",").map { it.trim() })
         } catch (e : IllegalArgumentException){
             println(e)
@@ -39,7 +44,7 @@ class OncallController(private val inputView: InputView,
         }
     }
     fun finalStep(){
-        
+
     }
     fun checkComma(input : String){
         validator.validateComma(input)
