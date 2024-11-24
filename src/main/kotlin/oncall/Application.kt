@@ -1,5 +1,11 @@
 package oncall
 
+import oncall.controller.OncallController
+import oncall.utils.Validator
+import oncall.view.InputView
+
 fun main() {
-    TODO("프로그램 구현")
+    val inputView = InputView()
+    val validator = Validator()
+    OncallController(inputView,validator).run()
 }
