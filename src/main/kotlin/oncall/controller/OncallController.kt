@@ -19,11 +19,16 @@ class OncallController(private val inputView: InputView,
     }
     fun step2(){
         try {
-            val weekDayWorker = ""
+            val weekDayWorker = inputView.inputWeekDayWorker()
+            checkComma(weekDayWorker)
+            checkWeekDayWorker(weekDayWorker)
+            return step3()
         } catch (e : IllegalArgumentException){
             println(e)
             step2()
         }
+    }
+    fun step3(){
     }
     fun checkComma(input : String){
         validator.validateComma(input)
@@ -31,11 +36,21 @@ class OncallController(private val inputView: InputView,
     fun checkMonthAndDate(passInputComma: String){
         try {
             val monthAndDate = passInputComma.trim().split(",")
-            validator.validateMonth(monthAndDate[0])
-            validator.validateDate(monthAndDate[1])
+            validator.validateMonth(monthAndDate[0].trim())
+            validator.validateDate(monthAndDate[1].trim())
         } catch (e: IllegalArgumentException){
             println(e)
             return run()
         }
+    }
+    fun checkWeekDayWorker(passInputComma: String){
+        try {
+            val weekDatWorker = passInputComma
+            validator.validateWeekDayWorker(weekDatWorker)
+        }catch (e: IllegalArgumentException){
+            println(e)
+            return step2()
+        }
+
     }
 }
