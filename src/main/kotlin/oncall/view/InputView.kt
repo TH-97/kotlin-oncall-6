@@ -8,7 +8,11 @@ class InputView {
         return Console.readLine()
     }
     fun inputWeekDayWorker() : String{
-        print("평일 비상 근무 순번대로 사원 닉네임을 입력하세요>")
+        print("평일 비상 근무 순번대로 사원 닉네임을 입력하세요> ")
+        return Console.readLine()
+    }
+    fun inputHolidayWorker() : String{
+        print("휴일 비상 근무 순번대로 사원 닉네임을 입력하세요> ")
         return Console.readLine()
     }
 }

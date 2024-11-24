@@ -22,13 +22,24 @@ class OncallController(private val inputView: InputView,
             val weekDayWorker = inputView.inputWeekDayWorker()
             checkComma(weekDayWorker)
             checkWeekDayWorker(weekDayWorker)
-            return step3()
+            return step3(weekDayWorker.trim().split(",").map { it.trim() })
         } catch (e : IllegalArgumentException){
             println(e)
             step2()
         }
     }
-    fun step3(){
+    fun step3(weekDayWorkerList: List<String>) {
+        try {
+            val holidayDayWorker = inputView.inputHolidayWorker()
+            checkComma(holidayDayWorker)
+            checkHolidayDayWorker(holidayDayWorker,weekDayWorkerList)
+        }catch (e: IllegalArgumentException){
+            println(e)
+            step3(weekDayWorkerList)
+        }
+    }
+    fun finalStep(){
+        
     }
     fun checkComma(input : String){
         validator.validateComma(input)
@@ -51,6 +62,15 @@ class OncallController(private val inputView: InputView,
             println(e)
             return step2()
         }
+    }
+    fun checkHolidayDayWorker(passInputComma: String, weekDayWorkerList: List<String>){
+        try {
+            val holidayWorker = passInputComma
+            validator.validateHolidayWorker(holidayWorker,weekDayWorkerList)
 
+        }catch (e: IllegalArgumentException){
+            println(e)
+            return step2()
+        }
     }
 }
